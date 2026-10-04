@@ -81,8 +81,14 @@ export default function PortalPage() {
     <main className="pt-24 section-padding container-content min-h-screen">
       <SectionReveal>
         <div className="max-w-3xl mx-auto mb-12 text-center">
-          <div className="mono-label text-accent mb-2">LEADERSHIP APPLICATIONS</div>
-          <h1 className="text-display-md font-bold text-text-primary mb-4">Help shape ACCRC</h1>
+          <div className="mono-label mb-4 flex items-center justify-center gap-3 text-accent">
+            <span className="inline-block h-px w-10 bg-accent" aria-hidden />
+            LEADERSHIP APPLICATIONS
+            <span className="inline-block h-px w-10 bg-accent" aria-hidden />
+          </div>
+          <h1 className="mb-4 font-display text-display-md font-black tracking-display text-ink">
+            Help shape ACCRC
+          </h1>
           <p className="text-body-lg text-text-secondary">
             Leadership applications are shown only while their application window is open. Membership applications remain available year-round.
           </p>
@@ -110,8 +116,7 @@ export default function PortalPage() {
                     type="button"
                     role="tab"
                     aria-selected={activeApplication === type}
-                    onClick={() => { setActiveApplication(type); setSuccess(false); }}
-                    className={`flex-1 min-w-40 py-4 px-3 text-center font-bold text-body-sm transition-colors ${
+                    onClick={() => { setActiveApplication(type); setSuccess(false); }}                      className={`flex-1 min-w-40 py-4 px-3 text-center mono-label transition-colors ${
                       activeApplication === type
                         ? 'border-b-2 border-accent text-text-primary'
                         : 'text-text-tertiary hover:text-text-secondary'
@@ -125,8 +130,8 @@ export default function PortalPage() {
               <Card className="p-6 sm:p-8">
                 {success ? (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ y: 32 }}
+                    animate={{ y: 0 }}
                     className="text-center py-12"
                   >
                     <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />

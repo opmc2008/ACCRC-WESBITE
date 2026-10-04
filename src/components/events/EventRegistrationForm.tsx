@@ -29,12 +29,12 @@ export function EventRegistrationForm({ eventId, eventName }: { eventId: string,
   if (status === 'success') {
     return (
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ y: 32 }}
+        animate={{ y: 0 }}
         className="flex flex-col items-center justify-center p-8 border border-border bg-secondary text-center"
       >
         <CheckCircle className="w-12 h-12 text-success mb-4" />
-        <h3 className="text-xl font-bold text-primary mb-2">Registration Submitted Successfully</h3>
+        <h3 className="text-xl font-bold text-text-primary mb-2">Registration Submitted Successfully</h3>
         <p className="text-text-secondary">We look forward to seeing you at {eventName}.</p>
       </motion.div>
     );

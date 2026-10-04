@@ -11,7 +11,7 @@ export function MissionSection() {
                 OUR MISSION
               </span>
               <div className="w-12 h-px bg-accent mb-6"></div>
-              <h2 className="text-display-md font-bold text-primary leading-tight">
+              <h2 className="text-display-md font-bold text-text-primary leading-tight">
                 Building Tomorrow's Engineers
               </h2>
             </div>

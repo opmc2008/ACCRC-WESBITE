@@ -22,23 +22,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   ref
 ) {
   const baseStyles =
-    "inline-flex items-center justify-center font-medium transition-all duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center font-bold rounded-full transition-all duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.97] font-mono uppercase";
 
   const variants = {
     primary:
-      "bg-accent text-white hover:bg-accent-hover active:scale-[0.98] border border-accent hover:shadow-[0_0_20px_rgba(10,132,255,0.25)]",
+      "bg-accent text-white hover:bg-accent-hover border border-accent shadow-[0_10px_28px_-12px_rgba(14,138,128,0.8)] tracking-wider",
     secondary:
-      "bg-transparent text-text-primary border border-border hover:border-text-tertiary hover:bg-tertiary active:scale-[0.98]",
+      "bg-secondary text-ink border-2 border-border-strong hover:bg-tertiary tracking-wider",
     ghost:
       "bg-transparent text-text-secondary hover:text-text-primary hover:bg-tertiary border border-transparent",
     danger:
-      "bg-danger/10 text-danger border border-danger/30 hover:bg-danger/20 active:scale-[0.98]",
+      "bg-danger/10 text-danger border border-danger/40 hover:bg-danger/20 tracking-wider",
   };
 
   const sizes = {
-    sm: "text-body-sm px-3 py-1.5 gap-1.5",
-    md: "text-body-md px-5 py-2.5 gap-2",
-    lg: "text-body-lg px-7 py-3.5 gap-2.5",
+    sm: "text-mono-sm px-4 py-2 gap-1.5",
+    md: "text-mono-sm px-6 py-3 gap-2",
+    lg: "text-body-sm px-8 py-4 gap-2.5",
   };
 
   const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;

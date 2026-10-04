@@ -29,9 +29,9 @@ export function OrganizationPortal({ portal }: { portal: OrganizationPortal }) {
 
   return (
     <AdminGuard>
-      <main className="min-h-screen bg-primary px-4 py-20 text-primary sm:px-6">
+      <main className="min-h-screen bg-primary px-4 py-20 text-text-primary sm:px-6">
         <div className="mx-auto max-w-4xl">
-          <Link href="/admin/" className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-secondary transition-colors hover:text-accent">
+          <Link href="/admin/" className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-text-secondary transition-colors hover:text-accent">
             <ArrowLeft size={16} aria-hidden /> Back to portals
           </Link>
 
@@ -44,12 +44,12 @@ export function OrganizationPortal({ portal }: { portal: OrganizationPortal }) {
               <ShieldCheck className="h-8 w-8 shrink-0 text-accent" aria-hidden />
             </div>
 
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-secondary">{details.description}</p>
+            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-text-secondary">{details.description}</p>
             <p className="mt-4 font-mono text-xs uppercase tracking-widest text-text-tertiary">
               Firebase authentication is required for this workspace.
             </p>
 
-            <Link href="/admin/portal/" className="mt-9 inline-flex items-center gap-2 border border-accent bg-accent px-5 py-3 font-mono text-xs uppercase tracking-widest text-primary transition-colors hover:bg-transparent hover:text-accent">
+            <Link href="/admin/portal/" className="mt-9 inline-flex items-center gap-2 border border-accent bg-accent px-5 py-3 font-mono text-xs uppercase tracking-widest text-text-primary transition-colors hover:bg-transparent hover:text-accent">
               {details.managerLabel} <ArrowUpRight size={16} aria-hidden />
             </Link>
           </section>

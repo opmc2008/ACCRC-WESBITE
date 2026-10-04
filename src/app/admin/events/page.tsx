@@ -180,9 +180,9 @@ export default function AdminEvents() {
 
   return (
     <AdminGuard>
-      <div className="pt-24 container-content min-h-screen pb-16 text-primary">
+      <div className="pt-24 container-content min-h-screen pb-16 text-text-primary">
         <div className="mb-6">
-          <Link href="/admin" className="text-secondary hover:text-accent font-mono text-sm flex items-center inline-flex">
+          <Link href="/admin" className="text-text-secondary hover:text-accent font-mono text-sm flex items-center inline-flex">
             <ChevronLeft className="w-4 h-4 mr-1" /> Back to Dashboard
           </Link>
         </div>
@@ -208,38 +208,38 @@ export default function AdminEvents() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-mono text-secondary uppercase">Name</label>
+                  <label className="text-xs font-mono text-text-secondary uppercase">Name</label>
                   <Input name="name" value={formData.name} onChange={handleInputChange} required className="w-full" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-mono text-secondary uppercase">Location</label>
+                  <label className="text-xs font-mono text-text-secondary uppercase">Location</label>
                   <Input name="location" value={formData.location} onChange={handleInputChange} required className="w-full" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-mono text-secondary uppercase">Event Date/Time</label>
-                  <Input type="datetime-local" name="date" value={formData.date} onChange={handleInputChange} required className="w-full bg-secondary border-border text-primary" />
+                  <label className="text-xs font-mono text-text-secondary uppercase">Event Date/Time</label>
+                  <Input type="datetime-local" name="date" value={formData.date} onChange={handleInputChange} required className="w-full bg-secondary border-border text-text-primary" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-mono text-secondary uppercase">Image URL (Optional)</label>
+                  <label className="text-xs font-mono text-text-secondary uppercase">Image URL (Optional)</label>
                   <Input name="imageUrl" value={formData.imageUrl} onChange={handleInputChange} className="w-full" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-mono text-secondary uppercase">Registration Opens (optional)</label>
-                  <Input type="datetime-local" name="registrationOpensAt" value={formData.registrationOpensAt} onChange={handleInputChange} className="w-full bg-secondary border-border text-primary" />
+                  <label className="text-xs font-mono text-text-secondary uppercase">Registration Opens (optional)</label>
+                  <Input type="datetime-local" name="registrationOpensAt" value={formData.registrationOpensAt} onChange={handleInputChange} className="w-full bg-secondary border-border text-text-primary" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-mono text-secondary uppercase">Registration Closes (optional)</label>
-                  <Input type="datetime-local" name="registrationClosesAt" value={formData.registrationClosesAt} onChange={handleInputChange} className="w-full bg-secondary border-border text-primary" />
+                  <label className="text-xs font-mono text-text-secondary uppercase">Registration Closes (optional)</label>
+                  <Input type="datetime-local" name="registrationClosesAt" value={formData.registrationClosesAt} onChange={handleInputChange} className="w-full bg-secondary border-border text-text-primary" />
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-mono text-secondary uppercase">Description</label>
+                <label className="text-xs font-mono text-text-secondary uppercase">Description</label>
                 <textarea 
                   name="description" 
                   value={formData.description} 
                   onChange={handleInputChange} 
                   required 
-                  className="w-full h-32 bg-primary border border-border p-3 text-primary focus:border-accent focus:outline-none transition-colors"
+                  className="w-full h-32 bg-primary border border-border p-3 text-text-primary focus:border-accent focus:outline-none transition-colors"
                 />
               </div>
               <div className="flex justify-end pt-4">
@@ -259,7 +259,7 @@ export default function AdminEvents() {
         ) : (
           <div className="space-y-4">
             {events.length === 0 ? (
-              <div className="text-center py-10 text-secondary border border-border bg-secondary">
+              <div className="text-center py-10 text-text-secondary border border-border bg-secondary">
                 No events found. Create one to get started.
               </div>
             ) : (
@@ -273,9 +273,9 @@ export default function AdminEvents() {
                     <div className="p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                       <div>
                         <h3 className="text-lg font-sans font-bold text-accent">{event.name}</h3>
-                        <div className="text-sm text-secondary font-mono mt-1 space-x-4">
+                        <div className="text-sm text-text-secondary font-mono mt-1 space-x-4">
                           <span>Date: {new Date(event.date).toLocaleDateString()}</span>
-                          <span>Status: <span className="text-primary">{statusInfo.label}</span></span>
+                          <span>Status: <span className="text-text-primary">{statusInfo.label}</span></span>
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
@@ -294,13 +294,13 @@ export default function AdminEvents() {
 
                     {isExpanded && (
                       <div className="border-t border-border bg-primary p-4">
-                        <h4 className="font-mono text-sm uppercase text-secondary mb-3">Registrations ({eventRegs.length})</h4>
+                        <h4 className="font-mono text-sm uppercase text-text-secondary mb-3">Registrations ({eventRegs.length})</h4>
                         {eventRegs.length === 0 ? (
-                          <div className="text-sm text-tertiary italic">No registrations yet.</div>
+                          <div className="text-sm text-text-tertiary italic">No registrations yet.</div>
                         ) : (
                           <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left">
-                              <thead className="text-xs font-mono uppercase bg-secondary text-secondary">
+                              <thead className="text-xs font-mono uppercase bg-secondary text-text-secondary">
                                 <tr>
                                   <th className="px-4 py-2 border-b border-border">Name</th>
                                   <th className="px-4 py-2 border-b border-border">Email</th>
@@ -312,10 +312,10 @@ export default function AdminEvents() {
                               <tbody>
                                 {eventRegs.map((reg) => (
                                   <tr key={reg.id} className="border-b border-border/50 hover:bg-secondary/50 font-mono text-xs">
-                                    <td className="px-4 py-2 text-primary">{reg.name}</td>
-                                    <td className="px-4 py-2 text-secondary">{reg.email}</td>
-                                    <td className="px-4 py-2 text-secondary">{reg.classSection || '-'}</td>
-                                    <td className="px-4 py-2 text-tertiary">
+                                    <td className="px-4 py-2 text-text-primary">{reg.name}</td>
+                                    <td className="px-4 py-2 text-text-secondary">{reg.email}</td>
+                                    <td className="px-4 py-2 text-text-secondary">{reg.classSection || '-'}</td>
+                                    <td className="px-4 py-2 text-text-tertiary">
                                       {reg.createdAt ? new Date(reg.createdAt).toLocaleDateString() : 'N/A'}
                                     </td>
                                     <td className="px-4 py-2">

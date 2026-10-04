@@ -51,7 +51,7 @@ export function NewsPreview() {
                         day: 'numeric'
                       })}
                     </div>
-                    <h3 className="text-display-xs font-bold text-primary mb-3 line-clamp-2">
+                    <h3 className="text-display-xs font-bold text-text-primary mb-3 line-clamp-2">
                       {item.title}
                     </h3>
                     <p className="text-body-sm text-text-secondary line-clamp-3 mb-6 flex-grow">

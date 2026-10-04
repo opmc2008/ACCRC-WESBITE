@@ -30,8 +30,13 @@ export default function NewsPage() {
     <main className="pt-24 section-padding container-content min-h-screen">
       <SectionReveal>
         <div className="mb-12">
-          <div className="mono-label text-accent mb-2">NEWS & UPDATES</div>
-          <h1 className="text-display-md font-bold text-text-primary">Stay in the Loop</h1>
+          <p className="mono-label mb-4 flex items-center gap-3 text-accent">
+            <span className="inline-block h-px w-10 bg-accent" aria-hidden />
+            NEWS &amp; UPDATES
+          </p>
+          <h1 className="font-display text-display-md font-black tracking-display text-ink">
+            Stay in the Loop
+          </h1>
         </div>
       </SectionReveal>
 
@@ -43,7 +48,7 @@ export default function NewsPage() {
         ) : news.length === 0 ? (
           <div className="text-text-secondary">No updates posted yet. Check back soon.</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {news.map((post) => (
               <NewsCard key={post.id} news={post} />
             ))}

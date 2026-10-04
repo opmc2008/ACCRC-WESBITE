@@ -150,9 +150,9 @@ export default function AdminPortal() {
 
   return (
     <AdminGuard>
-      <div className="pt-24 container-content min-h-screen pb-16 text-primary">
+      <div className="pt-24 container-content min-h-screen pb-16 text-text-primary">
         <div className="mb-6">
-          <Link href="/admin" className="text-secondary hover:text-accent font-mono text-sm flex items-center inline-flex">
+          <Link href="/admin" className="text-text-secondary hover:text-accent font-mono text-sm flex items-center inline-flex">
             <ChevronLeft className="w-4 h-4 mr-1" /> Back to Dashboard
           </Link>
         </div>
@@ -194,19 +194,19 @@ export default function AdminPortal() {
                       <div className={`block w-10 h-6 rounded-full transition-colors ${config.subExecOpen ? 'bg-success' : 'bg-border'}`}></div>
                       <div className={`dot absolute left-1 top-1 bg-primary w-4 h-4 rounded-full transition-transform ${config.subExecOpen ? 'transform translate-x-4' : ''}`}></div>
                     </div>
-                    <span className="ml-3 font-mono text-sm uppercase text-secondary">
+                    <span className="ml-3 font-mono text-sm uppercase text-text-secondary">
                       {config.subExecOpen ? 'Open' : 'Closed'}
                     </span>
                   </label>
                 </div>
                 
                 <div className="mb-4">
-                  <h3 className="font-mono text-sm uppercase text-secondary mb-3">Available Roles</h3>
+                  <h3 className="font-mono text-sm uppercase text-text-secondary mb-3">Available Roles</h3>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {config.subExecRoles.map(role => (
                       <div key={role} className="bg-primary border border-border px-3 py-1 flex items-center text-sm">
                         <span>{role}</span>
-                        <button type="button" disabled={configSaving !== null} onClick={() => void removeRole('subExecRoles', role)} className="ml-2 text-secondary hover:text-danger disabled:cursor-wait" aria-label={`Remove ${role}`}>
+                        <button type="button" disabled={configSaving !== null} onClick={() => void removeRole('subExecRoles', role)} className="ml-2 text-text-secondary hover:text-danger disabled:cursor-wait" aria-label={`Remove ${role}`}>
                           {configSaving === 'subExecRoles' ? <Loader2 className="w-3 h-3 animate-spin" aria-hidden /> : <X className="w-3 h-3" aria-hidden />}
                         </button>
                       </div>
@@ -243,19 +243,19 @@ export default function AdminPortal() {
                       <div className={`block w-10 h-6 rounded-full transition-colors ${config.execOpen ? 'bg-success' : 'bg-border'}`}></div>
                       <div className={`dot absolute left-1 top-1 bg-primary w-4 h-4 rounded-full transition-transform ${config.execOpen ? 'transform translate-x-4' : ''}`}></div>
                     </div>
-                    <span className="ml-3 font-mono text-sm uppercase text-secondary">
+                    <span className="ml-3 font-mono text-sm uppercase text-text-secondary">
                       {config.execOpen ? 'Open' : 'Closed'}
                     </span>
                   </label>
                 </div>
                 
                 <div className="mb-4">
-                  <h3 className="font-mono text-sm uppercase text-secondary mb-3">Available Roles</h3>
+                  <h3 className="font-mono text-sm uppercase text-text-secondary mb-3">Available Roles</h3>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {config.execRoles.map(role => (
                       <div key={role} className="bg-primary border border-border px-3 py-1 flex items-center text-sm">
                         <span>{role}</span>
-                        <button type="button" disabled={configSaving !== null} onClick={() => void removeRole('execRoles', role)} className="ml-2 text-secondary hover:text-danger disabled:cursor-wait" aria-label={`Remove ${role}`}>
+                        <button type="button" disabled={configSaving !== null} onClick={() => void removeRole('execRoles', role)} className="ml-2 text-text-secondary hover:text-danger disabled:cursor-wait" aria-label={`Remove ${role}`}>
                           {configSaving === 'execRoles' ? <Loader2 className="w-3 h-3 animate-spin" aria-hidden /> : <X className="w-3 h-3" aria-hidden />}
                         </button>
                       </div>
@@ -292,19 +292,19 @@ export default function AdminPortal() {
                       <div className={`block w-10 h-6 rounded-full transition-colors ${config.prefectOpen ? 'bg-success' : 'bg-border'}`}></div>
                       <div className={`dot absolute left-1 top-1 bg-primary w-4 h-4 rounded-full transition-transform ${config.prefectOpen ? 'transform translate-x-4' : ''}`}></div>
                     </div>
-                    <span className="ml-3 font-mono text-sm uppercase text-secondary">
+                    <span className="ml-3 font-mono text-sm uppercase text-text-secondary">
                       {config.prefectOpen ? 'Open' : 'Closed'}
                     </span>
                   </label>
                 </div>
 
                 <div className="mb-4">
-                  <h3 className="font-mono text-sm uppercase text-secondary mb-3">Available Roles</h3>
+                  <h3 className="font-mono text-sm uppercase text-text-secondary mb-3">Available Roles</h3>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {config.prefectRoles.map(role => (
                       <div key={role} className="bg-primary border border-border px-3 py-1 flex items-center text-sm">
                         <span>{role}</span>
-                        <button type="button" disabled={configSaving !== null} onClick={() => void removeRole('prefectRoles', role)} className="ml-2 text-secondary hover:text-danger disabled:cursor-wait" aria-label={`Remove ${role}`}>
+                        <button type="button" disabled={configSaving !== null} onClick={() => void removeRole('prefectRoles', role)} className="ml-2 text-text-secondary hover:text-danger disabled:cursor-wait" aria-label={`Remove ${role}`}>
                           {configSaving === 'prefectRoles' ? <Loader2 className="w-3 h-3 animate-spin" aria-hidden /> : <X className="w-3 h-3" aria-hidden />}
                         </button>
                       </div>
@@ -331,7 +331,7 @@ export default function AdminPortal() {
                 <button 
                   role="tab"
                   aria-selected={activeTab === 'sub-executive'}
-                  className={`shrink-0 px-4 py-4 font-mono text-xs uppercase tracking-wider sm:px-6 sm:text-sm ${activeTab === 'sub-executive' ? 'bg-primary text-accent border-b-2 border-accent' : 'text-secondary hover:bg-primary/50'}`}
+                  className={`shrink-0 px-4 py-4 font-mono text-xs uppercase tracking-wider sm:px-6 sm:text-sm ${activeTab === 'sub-executive' ? 'bg-primary text-accent border-b-2 border-accent' : 'text-text-secondary hover:bg-primary/50'}`}
                   onClick={() => setActiveTab('sub-executive')}
                 >
                   Sub-Executive Apps
@@ -339,7 +339,7 @@ export default function AdminPortal() {
                 <button 
                   role="tab"
                   aria-selected={activeTab === 'executive'}
-                  className={`shrink-0 px-4 py-4 font-mono text-xs uppercase tracking-wider sm:px-6 sm:text-sm ${activeTab === 'executive' ? 'bg-primary text-accent border-b-2 border-accent' : 'text-secondary hover:bg-primary/50'}`}
+                  className={`shrink-0 px-4 py-4 font-mono text-xs uppercase tracking-wider sm:px-6 sm:text-sm ${activeTab === 'executive' ? 'bg-primary text-accent border-b-2 border-accent' : 'text-text-secondary hover:bg-primary/50'}`}
                   onClick={() => setActiveTab('executive')}
                 >
                   Executive Apps
@@ -347,7 +347,7 @@ export default function AdminPortal() {
                 <button
                   role="tab"
                   aria-selected={activeTab === 'prefect'}
-                  className={`shrink-0 px-4 py-4 font-mono text-xs uppercase tracking-wider sm:px-6 sm:text-sm ${activeTab === 'prefect' ? 'bg-primary text-accent border-b-2 border-accent' : 'text-secondary hover:bg-primary/50'}`}
+                  className={`shrink-0 px-4 py-4 font-mono text-xs uppercase tracking-wider sm:px-6 sm:text-sm ${activeTab === 'prefect' ? 'bg-primary text-accent border-b-2 border-accent' : 'text-text-secondary hover:bg-primary/50'}`}
                   onClick={() => setActiveTab('prefect')}
                 >
                   Prefect Apps
@@ -355,7 +355,7 @@ export default function AdminPortal() {
                 <button 
                   role="tab"
                   aria-selected={activeTab === 'membership'}
-                  className={`shrink-0 px-4 py-4 font-mono text-xs uppercase tracking-wider sm:px-6 sm:text-sm ${activeTab === 'membership' ? 'bg-primary text-accent border-b-2 border-accent' : 'text-secondary hover:bg-primary/50'}`}
+                  className={`shrink-0 px-4 py-4 font-mono text-xs uppercase tracking-wider sm:px-6 sm:text-sm ${activeTab === 'membership' ? 'bg-primary text-accent border-b-2 border-accent' : 'text-text-secondary hover:bg-primary/50'}`}
                   onClick={() => setActiveTab('membership')}
                 >
                   Memberships
@@ -365,11 +365,11 @@ export default function AdminPortal() {
               <div className="p-4">
                 {(activeTab === 'sub-executive' || activeTab === 'executive' || activeTab === 'prefect') && (
                   filteredApps.length === 0 ? (
-                    <div className="text-center py-10 text-secondary">No applications received yet.</div>
+                    <div className="text-center py-10 text-text-secondary">No applications received yet.</div>
                   ) : (
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm text-left">
-                        <thead className="text-xs font-mono uppercase bg-primary text-secondary">
+                        <thead className="text-xs font-mono uppercase bg-primary text-text-secondary">
                           <tr>
                             <th className="px-4 py-3 border-b border-border">Applicant</th>
                             <th className="px-4 py-3 border-b border-border">ID / Section</th>
@@ -385,16 +385,16 @@ export default function AdminPortal() {
                               <tr className="border-b border-border hover:bg-primary/50">
                                 <td className="px-4 py-3">
                                   <div className="font-bold">{app.name || 'Name not provided'}</div>
-                                  <div className="mt-1 text-xs text-secondary">{app.email}</div>
+                                  <div className="mt-1 text-xs text-text-secondary">{app.email}</div>
                                 </td>
-                                <td className="px-4 py-3 font-mono text-secondary">
+                                <td className="px-4 py-3 font-mono text-text-secondary">
                                   {app.idNumber}<br/>{app.section}
                                 </td>
-                                <td className="px-4 py-3 font-mono text-secondary text-xs">
+                                <td className="px-4 py-3 font-mono text-text-secondary text-xs">
                                   {app.whatsapp || '—'}
                                 </td>
                                 <td className="px-4 py-3 text-accent font-bold">{app.roleApplyingFor}</td>
-                                <td className="px-4 py-3 text-tertiary font-mono text-xs">
+                                <td className="px-4 py-3 text-text-tertiary font-mono text-xs">
                                   {app.createdAt ? new Date(app.createdAt).toLocaleDateString() : 'N/A'}
                                 </td>
                                 <td className="px-4 py-3">
@@ -422,20 +422,20 @@ export default function AdminPortal() {
                                   <td colSpan={6} className="px-6 py-4 border-b border-border">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                       <div>
-                                        <h4 className="font-mono text-xs uppercase text-secondary mb-2">Contact details</h4>
+                                        <h4 className="font-mono text-xs uppercase text-text-secondary mb-2">Contact details</h4>
                                         <div className="bg-secondary p-3 border border-border text-sm leading-relaxed">
-                                          <p><span className="text-secondary">Email:</span> {app.email}</p>
-                                          <p><span className="text-secondary">WhatsApp:</span> {app.whatsapp || 'Not provided'}</p>
+                                          <p><span className="text-text-secondary">Email:</span> {app.email}</p>
+                                          <p><span className="text-text-secondary">WhatsApp:</span> {app.whatsapp || 'Not provided'}</p>
                                         </div>
                                       </div>
                                       <div>
-                                        <h4 className="font-mono text-xs uppercase text-secondary mb-2">Experience</h4>
+                                        <h4 className="font-mono text-xs uppercase text-text-secondary mb-2">Experience</h4>
                                         <div className="bg-secondary p-3 border border-border whitespace-pre-wrap text-sm">
                                           {app.pastExperience}
                                         </div>
                                       </div>
                                       <div>
-                                        <h4 className="font-mono text-xs uppercase text-secondary mb-2">Vision Statement</h4>
+                                        <h4 className="font-mono text-xs uppercase text-text-secondary mb-2">Vision Statement</h4>
                                         <div className="bg-secondary p-3 border border-border whitespace-pre-wrap text-sm">
                                           {app.visionStatement}
                                         </div>
@@ -454,11 +454,11 @@ export default function AdminPortal() {
 
                 {activeTab === 'membership' && (
                   memberships.length === 0 ? (
-                    <div className="text-center py-10 text-secondary">No membership registrations received yet.</div>
+                    <div className="text-center py-10 text-text-secondary">No membership registrations received yet.</div>
                   ) : (
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm text-left">
-                        <thead className="text-xs font-mono uppercase bg-primary text-secondary">
+                        <thead className="text-xs font-mono uppercase bg-primary text-text-secondary">
                           <tr>
                             <th className="px-4 py-3 border-b border-border">Name</th>
                             <th className="px-4 py-3 border-b border-border">Email</th>
@@ -473,11 +473,11 @@ export default function AdminPortal() {
                           {memberships.map(mem => (
                             <tr key={mem.id} className="border-b border-border hover:bg-primary/50">
                               <td className="px-4 py-3 font-bold">{mem.name}</td>
-                              <td className="px-4 py-3 text-secondary">{mem.email}</td>
-                              <td className="px-4 py-3 font-mono text-secondary text-xs">{mem.whatsapp || '—'}</td>
-                              <td className="px-4 py-3 text-secondary">{mem.classSection}</td>
-                              <td className="px-4 py-3 font-mono text-secondary">{mem.collegeId || mem.rollNumber || 'N/A'}</td>
-                              <td className="px-4 py-3 text-secondary max-w-sm whitespace-pre-wrap">{mem.motivation}</td>
+                              <td className="px-4 py-3 text-text-secondary">{mem.email}</td>
+                              <td className="px-4 py-3 font-mono text-text-secondary text-xs">{mem.whatsapp || '—'}</td>
+                              <td className="px-4 py-3 text-text-secondary">{mem.classSection}</td>
+                              <td className="px-4 py-3 font-mono text-text-secondary">{mem.collegeId || mem.rollNumber || 'N/A'}</td>
+                              <td className="px-4 py-3 text-text-secondary max-w-sm whitespace-pre-wrap">{mem.motivation}</td>
                               <td className="px-4 py-3">
                                 <Button
                                   variant="danger"

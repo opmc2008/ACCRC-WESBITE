@@ -3,6 +3,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Award, GraduationCap, IdCard, Medal, ShieldCheck, Trophy, UsersRound } from 'lucide-react';
 import { subscribeToAchievements, type FirestoreAchievement } from '@/lib/firestore';
+import { SplitReveal } from '@/components/fx/SplitReveal';
+import { Parallax } from '@/components/fx/Parallax';
+import { TiltCard } from '@/components/fx/TiltCard';
+import { ScrollSlide } from '@/components/fx/ScrollSlide';
 import styles from './AchievementsAndPanels.module.css';
 
 type PanelKey = '2026' | '2025' | '2024' | '2023' | 'founder';
@@ -495,13 +499,45 @@ export function AchievementsAndPanels() {
       .sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
   }, [adminAchievements]);
 
+  const [levelFilter, setLevelFilter] = useState<'All' | AwardLevel>('All');
+
+  /* Grouped newest-first by the year stored on each record. */
+  const achievementYears = useMemo(() => {
+    const visible = levelFilter === 'All'
+      ? achievements
+      : achievements.filter((a) => a.level === levelFilter);
+    const groups = new Map<number, Array<Achievement | FirestoreAchievement>>();
+    for (const item of visible) {
+      const list = groups.get(item.year) ?? [];
+      list.push(item);
+      groups.set(item.year, list);
+    }
+    return Array.from(groups.entries()).sort((a, b) => b[0] - a[0]);
+  }, [achievements, levelFilter]);
+
   return (
     <section className={styles.section} id="achievements" aria-labelledby="achievements-title">
+      {/* Depth layers: drifting glow orbs and an outlined wordmark behind the content */}
+      <div className={styles.backdrop} aria-hidden>
+        <Parallax speed={16} className={styles.orbA}><span /></Parallax>
+        <Parallax speed={28} className={styles.orbB}><span /></Parallax>
+        <p className={styles.wordmark}>Hall of Fame</p>
+      </div>
+
       <div className={styles.wrap}>
         <div className={styles.intro}>
           <div>
-            <p className={styles.eyebrow}>RECOGNITION / LEADERSHIP</p>
-            <h2 id="achievements-title">Achievements &amp; <span>Executive Panels.</span></h2>
+            <p className={styles.eyebrow}>Recognition / Leadership</p>
+            <SplitReveal
+              delay={0.1}
+              className="font-display"
+              lineClassName="text-white"
+              lines={[
+                <>Achievements &amp;</>,
+                <><span className={styles.introSpan}>Executive Panels.</span></>,
+              ]}
+            />
+            <h2 id="achievements-title" className="sr-only">Achievements &amp; Executive Panels.</h2>
           </div>
           <p className={styles.introCopy}>
             A growing record of the people, projects, and results that represent ACCRC.
@@ -509,19 +545,32 @@ export function AchievementsAndPanels() {
         </div>
 
         <div className={styles.panel}>
-          <div className={styles.contentDivider} />
           <div className={styles.contentHeading}>
             <div>
               <Trophy aria-hidden="true" />
               <h4>All Achievements</h4>
             </div>
-            <span>{achievements.length} published</span>
+            <span className={styles.countBadge}>{achievements.length} published</span>
           </div>
-          {achievements.length > 0 ? <AchievementGrid achievements={achievements} /> : <EmptyState label="achievement records" />}
+
+          {achievements.length === 0
+            ? <EmptyState label="achievement records" />
+            : <AchievementArchive years={achievementYears} filter={levelFilter} onFilter={setLevelFilter} />}
 
           <div className={styles.leadershipArchive} aria-label="Leadership archive">
-            {leadershipPanels.map(([key, panel]) => (
-              <section className={styles.leadershipPanel} key={key} aria-labelledby={`leadership-${key}`}>
+            {leadershipPanels.map(([key, panel], panelIndex) => (
+              /* These panels run from ~570px to ~2800px tall. A top-anchored
+                 range would finish the slide within the first screen and leave
+                 the rest of the panel static, so the range is anchored to the
+                 panel's end and the travel spans its whole height. */
+              <ScrollSlide
+                key={key}
+                axis="y"
+                from={170 + (panelIndex % 2) * 45}
+                to={-16}
+                offset={['start 0.9', 'end 0.72']}
+              >
+              <section className={styles.leadershipPanel} aria-labelledby={`leadership-${key}`}>
                 <div className={styles.panelIntro}>
                   <div>
                     <p className={styles.eyebrow}>{panel.eyebrow}</p>
@@ -560,6 +609,7 @@ export function AchievementsAndPanels() {
                   </>
                 )}
               </section>
+              </ScrollSlide>
             ))}
           </div>
         </div>
@@ -568,34 +618,97 @@ export function AchievementsAndPanels() {
   );
 }
 
-function AchievementGrid({ achievements }: { achievements: Array<Achievement | FirestoreAchievement> }) {
+/* Achievements grouped by year. The year label pins to the left while its
+   records scroll past, so the archive reads as a ledger rather than a wall of
+   identical cards. */
+function AchievementArchive({
+  years,
+  filter,
+  onFilter,
+}: {
+  years: Array<[number, Array<Achievement | FirestoreAchievement>]>;
+  filter: 'All' | AwardLevel;
+  onFilter: (value: 'All' | AwardLevel) => void;
+}) {
+  const options: Array<'All' | AwardLevel> = ['All', 'Global', 'National'];
+
   return (
-    <div className={styles.achievementGrid}>
-      {achievements.map((achievement, index) => (
-        <article className={styles.achievementCard} key={`${'id' in achievement ? achievement.id : 'built-in'}-${achievement.title}-${achievement.recipients}`}>
-          <div className={styles.awardIcon} aria-hidden="true">
-            {index % 2 === 0 ? <Trophy /> : <Medal />}
-          </div>
-          <div className={styles.achievementBody}>
-            <div className={styles.cardMeta}>
-              <span className={achievement.level === 'Global' ? styles.global : styles.national}>{achievement.level}</span>
-              <time dateTime={String(achievement.year)}>{achievement.year}</time>
+    <>
+      <div className={styles.filterRow}>
+        <div className={styles.filters} role="group" aria-label="Filter achievements by recognition level">
+          {options.map((option) => (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onFilter(option)}
+              aria-pressed={filter === option}
+              className={`${styles.filterChip} ${filter === option ? styles.filterChipActive : ''}`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+        <p className={styles.filterNote}>
+          {years.reduce((total, [, items]) => total + items.length, 0)} records
+        </p>
+      </div>
+
+      {years.map(([year, items], bandIndex) => {
+        const fromLeft = bandIndex % 2 === 0;
+        return (
+          <section className={styles.yearSection} key={year} aria-label={`${year} achievements`}>
+            {/* The year label drifts across as the band scrolls past. */}
+            <div className={styles.yearSticky}>
+              <ScrollSlide axis="y" from={120 + bandIndex * 30} to={-14}>
+                <span className={styles.yearNumber} aria-hidden>{year}</span>
+                <span className={styles.yearCount}>
+                  {items.length} {items.length === 1 ? 'record' : 'records'}
+                </span>
+              </ScrollSlide>
             </div>
-            <h5>{achievement.title}</h5>
-            <p className={styles.recipients}>{achievement.recipients}</p>
-            <p className={styles.competition}>{achievement.competition}</p>
-          </div>
-        </article>
-      ))}
-    </div>
+            {/* The cards for that year slide in from the opposite side. */}
+            <ScrollSlide axis="y" from={180} to={-16}>
+              <div className={styles.yearGrid}>
+                {items.map((achievement, index) => (
+                  <ScrollSlide
+                    key={`${'id' in achievement ? achievement.id : 'built-in'}-${achievement.title}`}
+                    axis="y"
+                    from={150 + (index % 3) * 45}
+                    to={-16}
+                  >
+                    <TiltCard className={styles.cardWrap} maxTilt={4}>
+                      <article className={styles.card}>
+                        <div className={styles.cardTop}>
+                          <span className={styles.awardIcon} aria-hidden="true">
+                            {index % 2 === 0 ? <Trophy /> : <Medal />}
+                          </span>
+                          <div className={styles.cardMeta}>
+                            <span className={achievement.level === 'Global' ? styles.global : styles.national}>
+                              {achievement.level}
+                            </span>
+                            <time dateTime={String(achievement.year)}>{achievement.year}</time>
+                          </div>
+                        </div>
+                        <h5 className={styles.cardTitle}>{achievement.title}</h5>
+                        <p className={styles.recipients}>{achievement.recipients}</p>
+                        <p className={styles.competition}>{achievement.competition}</p>
+                      </article>
+                    </TiltCard>
+                  </ScrollSlide>
+                ))}
+              </div>
+            </ScrollSlide>
+          </section>
+        );
+      })}
+    </>
   );
 }
 
 function MemberGrid({ members, className = '' }: { members: ExecutiveMember[]; className?: string }) {
   return (
     <div className={`${styles.memberGrid} ${className}`}>
-      {members.map((member) => {
-        const framed = Boolean(member.imageUrl && member.imageFrame);
+      {members.map((member, index) => {
         const imageClass = member.imageFrame === 'portrait'
           ? styles.portraitFrame
           : member.imageFrame === 'wide'
@@ -605,26 +718,37 @@ function MemberGrid({ members, className = '' }: { members: ExecutiveMember[]; c
               : '';
 
         return (
-          <article
-            className={`${styles.memberCard} ${framed ? styles.framedCard : ''}`}
+          /* Each person rises as they come into view, so the panel reads as a
+             roll call rather than a wall of static cards. Member cards are
+             small, so the default top-anchored range is exactly right here. */
+          <ScrollSlide
             key={member.name}
+            axis="y"
+            from={120 + (index % 4) * 40}
+            to={-14}
+          >
+          <article
+            className={`${styles.memberCard} h-full`}
             aria-label={`${member.name}, ${member.designation}`}
           >
-            {member.imageUrl ? (
-              <img
-                className={`${styles.avatar} ${imageClass}`}
-                src={member.imageUrl}
-                alt={`${member.name}, ${member.designation}`}
-                width={768}
-                height={768}
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <div className={styles.avatarFallback} aria-label={`Photo to be added for ${member.name}`}>
-                {member.name.split(' ').map((part) => part[0]).join('').slice(0, 3)}
-              </div>
-            )}
+            <div className={styles.portrait}>
+              {member.imageUrl ? (
+                <img
+                  className={`${styles.avatar} ${imageClass}`}
+                  src={member.imageUrl}
+                  alt={`${member.name}, ${member.designation}`}
+                  width={768}
+                  height={768}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div className={styles.avatarFallback} aria-label={`Photo to be added for ${member.name}`}>
+                  {member.name.split(' ').map((part) => part[0]).join('').slice(0, 3)}
+                </div>
+              )}
+              <span className={styles.portraitShine} aria-hidden="true" />
+            </div>
             <div className={styles.memberInfo}>
               <p className={styles.memberRole}>{member.designation}</p>
               <h5>{member.name}</h5>
@@ -633,6 +757,7 @@ function MemberGrid({ members, className = '' }: { members: ExecutiveMember[]; c
               )}
             </div>
           </article>
+          </ScrollSlide>
         );
       })}
     </div>

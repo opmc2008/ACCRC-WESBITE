@@ -1,14 +1,86 @@
+/* ═══════════════════════════════════════════════════════════
+   Achievements & Panels — the site's one dark "Hall of Fame"
+   Shape language: one radius scale, no decorative arches.
+   Cards    1rem · chips 999px · icons 0.75rem
+   ═══════════════════════════════════════════════════════════ */
+
 .section {
-  background: #081c1f;
-  border-bottom: 1px solid rgba(39, 224, 210, 0.18);
-  padding: clamp(5rem, 9vw, 9rem) 10vw;
+  background: #0d1b18;
+  color: #e8fffb;
+  overflow: clip;
+  padding-block: clamp(5rem, 9vw, 9rem);
+  position: relative;
 }
 
 .wrap {
   margin: 0 auto;
   max-width: 1440px;
+  padding-inline: 6vw;
+  position: relative;
+  z-index: 2;
 }
 
+/* ─── Depth layers ─── */
+.backdrop {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+}
+
+.backdrop > * {
+  position: absolute;
+}
+
+.orbA,
+.orbB {
+  border-radius: 50%;
+  filter: blur(90px);
+}
+
+.orbA {
+  right: -6%;
+  top: 4%;
+  width: min(46vw, 620px);
+}
+
+.orbA span {
+  background: radial-gradient(circle, rgba(43, 224, 210, 0.2), transparent 70%);
+  border-radius: 50%;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.orbB {
+  bottom: 18%;
+  left: -8%;
+  width: min(38vw, 520px);
+}
+
+.orbB span {
+  background: radial-gradient(circle, rgba(14, 138, 128, 0.26), transparent 70%);
+  border-radius: 50%;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.wordmark {
+  bottom: 24%;
+  color: transparent;
+  font: 900 clamp(4rem, 17vw, 15rem) / 0.8 var(--font-nunito), sans-serif;
+  left: 50%;
+  letter-spacing: -0.05em;
+  margin: 0;
+  opacity: 0.14;
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  -webkit-text-stroke: 1.5px rgba(232, 255, 251, 0.9);
+}
+
+/* ─── Header ─── */
 .intro {
   align-items: end;
   display: grid;
@@ -17,29 +89,29 @@
 }
 
 .eyebrow {
-  color: #48dfd4;
-  font: 700 0.72rem/1.35 "Courier New", monospace;
-  letter-spacing: 0.13em;
+  color: #2be0d2;
+  font: 700 0.72rem/1.35 var(--font-spacemono), "Courier New", monospace;
+  letter-spacing: 0.16em;
   margin: 0 0 1rem;
+  text-transform: uppercase;
 }
 
 .intro h2 {
-  color: #effffd;
   font-size: clamp(2.75rem, 6.1vw, 5.5rem);
-  font-weight: 800;
-  letter-spacing: -0.065em;
-  line-height: 0.9;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 0.92;
   margin: 0;
-  max-width: 11ch;
+  max-width: 12ch;
 }
 
-.intro h2 span {
-  color: #92a5a5;
+.introSpan {
+  color: rgba(232, 255, 251, 0.45);
 }
 
 .introCopy,
 .panelIntro > p {
-  color: #cbd5e1;
+  color: rgba(232, 255, 251, 0.62);
   font-size: clamp(1rem, 1.2vw, 1.125rem);
   line-height: 1.7;
   margin: 0;
@@ -47,15 +119,223 @@
 }
 
 .panel {
-  animation: panelEnter 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  border-top: 1px solid #315052;
-  margin-top: clamp(2.75rem, 5vw, 4.5rem);
-  padding-top: clamp(2rem, 4vw, 3.75rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
 }
 
-@keyframes panelEnter {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+.contentHeading {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.contentHeading > div {
+  align-items: center;
+  display: flex;
+  gap: 0.65rem;
+}
+
+.contentHeading svg {
+  color: #2be0d2;
+  filter: drop-shadow(0 0 10px rgba(43, 224, 210, 0.55));
+  height: 1.35rem;
+  width: 1.35rem;
+}
+
+.contentHeading h4 {
+  color: #e8fffb;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.countBadge {
+  border: 1.5px solid rgba(43, 224, 210, 0.45);
+  border-radius: 999px;
+  color: #2be0d2;
+  font: 700 0.69rem/1 var(--font-spacemono), "Courier New", monospace;
+  letter-spacing: 0.1em;
+  padding: 0.55rem 0.9rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ─── Filters ─── */
+.filterRow {
+  align-items: center;
+  border-bottom: 1.5px solid rgba(232, 255, 251, 0.14);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  padding-bottom: 1.25rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filterChip {
+  background: transparent;
+  border: 1.5px solid rgba(232, 255, 251, 0.18);
+  border-radius: 999px;
+  color: rgba(232, 255, 251, 0.6);
+  cursor: pointer;
+  font: 700 0.7rem/1 var(--font-spacemono), "Courier New", monospace;
+  letter-spacing: 0.1em;
+  padding: 0.65rem 1.1rem;
+  text-transform: uppercase;
+  transition: border-color 200ms ease, background-color 200ms ease, color 200ms ease;
+}
+
+.filterChip:hover {
+  border-color: rgba(43, 224, 210, 0.6);
+  color: #e8fffb;
+}
+
+.filterChipActive {
+  background: #2be0d2;
+  border-color: #2be0d2;
+  color: #0d1b18;
+}
+
+.filterNote {
+  color: rgba(232, 255, 251, 0.4);
+  font: 700 0.7rem/1 var(--font-spacemono), "Courier New", monospace;
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* ─── Year ledger ─── */
+.yearSection {
+  display: grid;
+  gap: 1.5rem 3rem;
+  grid-template-columns: minmax(0, 1fr);
+  padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.yearSticky {
+  align-items: baseline;
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.yearNumber {
+  color: transparent;
+  font: 900 clamp(2.5rem, 6vw, 4rem) / 0.9 var(--font-nunito), sans-serif;
+  letter-spacing: -0.05em;
+  -webkit-text-stroke: 1.5px rgba(43, 224, 210, 0.75);
+}
+
+.yearCount {
+  color: rgba(232, 255, 251, 0.4);
+  font: 700 0.68rem/1 var(--font-spacemono), "Courier New", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.yearGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+}
+
+/* ─── Achievement card ─── */
+.cardWrap {
+  border-radius: 1rem;
+  height: 100%;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1.5px solid rgba(232, 255, 251, 0.14);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.5rem;
+  transition: border-color 220ms ease, background-color 220ms ease;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(43, 224, 210, 0.7);
+}
+
+.cardTop {
+  align-items: center;
+  display: flex;
+  gap: 0.9rem;
+  justify-content: space-between;
+}
+
+.cardTitle {
+  color: #e8fffb;
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.28;
+  margin: 1.1rem 0 0;
+}
+
+.awardIcon {
+  align-items: center;
+  background: rgba(43, 224, 210, 0.12);
+  border: 1.5px solid rgba(43, 224, 210, 0.35);
+  border-radius: 0.75rem;
+  color: #2be0d2;
+  display: flex;
+  flex: 0 0 auto;
+  height: 2.6rem;
+  justify-content: center;
+  width: 2.6rem;
+}
+
+.awardIcon svg { height: 1.3rem; width: 1.3rem; }
+
+.cardMeta {
+  align-items: center;
+  display: flex;
+  gap: 0.55rem;
+}
+
+.cardMeta span,
+.cardMeta time {
+  font: 700 0.63rem/1 var(--font-spacemono), "Courier New", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cardMeta span { border: 1.5px solid currentColor; border-radius: 999px; padding: 0.3rem 0.55rem; }
+.global { color: #2be0d2; }
+.national { color: rgba(232, 255, 251, 0.5); }
+.cardMeta time { color: rgba(232, 255, 251, 0.38); }
+
+.recipients,
+.competition {
+  margin: 0.4rem 0 0;
+}
+
+.recipients { color: #e8fffb; font-size: 0.93rem; font-weight: 700; line-height: 1.45; }
+.competition { color: rgba(232, 255, 251, 0.5); font-size: 0.86rem; line-height: 1.5; }
+
+/* ─── Leadership ─── */
+.leadershipArchive {
+  display: grid;
+  gap: clamp(4rem, 9vw, 8rem);
+  margin-top: clamp(4.5rem, 9vw, 8rem);
+}
+
+.leadershipPanel {
+  border-top: 1.5px solid rgba(232, 255, 251, 0.14);
+  padding-top: clamp(2rem, 4vw, 3.5rem);
 }
 
 .panelIntro {
@@ -66,260 +346,137 @@
 }
 
 .panelIntro h3 {
-  color: #effffd;
-  font-size: clamp(1.8rem, 3.1vw, 3rem);
-  letter-spacing: -0.045em;
+  color: #e8fffb;
+  font-size: clamp(1.8rem, 3.4vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
   line-height: 1;
   margin: 0;
 }
 
-.contentDivider {
-  background: #315052;
-  height: 1px;
-  margin: clamp(2rem, 4vw, 3.5rem) 0 1.35rem;
-}
-
-.contentHeading {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.1rem;
-}
-
-.contentHeading > div {
-  align-items: center;
-  display: flex;
-  gap: 0.65rem;
-}
-
-.contentHeading svg {
-  color: #36dbd0;
-  height: 1.25rem;
-  width: 1.25rem;
-}
-
-.contentHeading h4 {
-  color: #effffd;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
-  letter-spacing: -0.025em;
-  margin: 0;
-}
-
-.contentHeading > span {
-  color: #94a3b8;
-  font: 700 0.69rem/1 "Courier New", monospace;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.achievementGrid {
-  display: grid;
-  gap: 0.85rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.achievementCard {
-  background: #0b272a;
-  border: 1px solid #315052;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: auto minmax(0, 1fr);
-  min-height: 11rem;
-  padding: clamp(1.15rem, 2.1vw, 1.55rem);
-  transition: border-color 180ms ease, transform 180ms ease;
-}
-
-.achievementCard:hover {
-  border-color: #4fd8d1;
-  transform: translateY(-3px);
-}
-
-.awardIcon {
-  align-items: center;
-  background: rgba(54, 219, 208, 0.12);
-  border: 1px solid rgba(103, 232, 249, 0.26);
-  color: #67e8f9;
-  display: flex;
-  height: 2.75rem;
-  justify-content: center;
-  width: 2.75rem;
-}
-
-.awardIcon svg { height: 1.35rem; width: 1.35rem; }
-.achievementBody { min-width: 0; }
-
-.cardMeta {
-  align-items: center;
-  display: flex;
-  gap: 0.6rem;
-  margin-bottom: 0.65rem;
-}
-
-.cardMeta span,
-.cardMeta time {
-  font: 700 0.64rem/1 "Courier New", monospace;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.cardMeta span { border: 1px solid currentColor; padding: 0.28rem 0.38rem; }
-.global { color: #70f3df; }
-.national { color: #b7c9c7; }
-.cardMeta time { color: #86a3a3; }
-
-.achievementCard h5,
-.memberCard h5 {
-  color: #f2ffff;
-  font-size: clamp(1.02rem, 1.5vw, 1.18rem);
-  letter-spacing: -0.022em;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.recipients,
-.competition {
-  margin: 0.45rem 0 0;
-}
-
-.recipients { color: #e2e8f0; font-size: 0.94rem; font-weight: 700; line-height: 1.48; }
-.competition { color: #94a3b8; font-size: 0.88rem; line-height: 1.5; }
-
-.executiveHeading { border-top: 1px solid #315052; margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: 1.6rem; }
-
-.leadershipArchive {
-  display: grid;
-  gap: clamp(3.5rem, 8vw, 7rem);
-  margin-top: clamp(4rem, 8vw, 7rem);
-}
-
-.leadershipPanel {
-  border-top: 1px solid #315052;
-  padding-top: clamp(2rem, 4vw, 3.75rem);
-}
+.executiveHeading { margin-top: clamp(2.5rem, 5vw, 4rem); }
 
 .memberGrid {
   display: grid;
-  gap: 0.85rem;
+  gap: 1rem;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.founderGrid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 0 auto;
-  max-width: 70rem;
-}
-
-.moderatorGrid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 0 auto;
-  max-width: 58rem;
-}
-
-.prefectGrid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin: 0 auto;
-  max-width: 40rem;
-}
+.founderGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 auto; max-width: 70rem; }
+.moderatorGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 auto; max-width: 46rem; }
+.prefectGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 auto; max-width: 36rem; }
 
 .memberCard {
-  background: #0b272a;
-  border: 1px solid #315052;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(232, 255, 251, 0.14);
+  border-radius: 1rem;
   min-width: 0;
   overflow: hidden;
-  padding: 1.2rem;
-  transition: border-color 180ms ease, transform 180ms ease;
+  text-align: center;
+  transition: border-color 220ms ease, background-color 220ms ease;
 }
 
-.memberCard:hover { border-color: #4fd8d1; transform: translateY(-3px); }
+.memberCard:hover {
+  background: rgba(255, 255, 251, 0.07);
+  border-color: rgba(43, 224, 210, 0.65);
+}
 
-.avatar {
+.portrait {
+  overflow: hidden;
+  position: relative;
+}
+
+.portraitShine {
+  background: linear-gradient(115deg, transparent 38%, rgba(232, 255, 251, 0.2) 50%, transparent 62%);
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 400ms ease, transform 700ms ease;
+  transform: translateX(-40%);
+}
+
+.memberCard:hover .portraitShine {
+  opacity: 1;
+  transform: translateX(40%);
+}
+
+.avatar,
+.avatarFallback {
   aspect-ratio: 1;
-  background: #123236;
-  border: 2px solid #42d8cf;
-  border-radius: 50%;
+  background: rgba(43, 224, 210, 0.08);
   display: block;
-  margin: 0 auto 1.15rem;
-  max-width: 9.2rem;
   object-fit: cover;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
   width: 100%;
+}
+
+.memberCard:hover .avatar,
+.memberCard:hover .avatarFallback {
+  transform: scale(1.05);
 }
 
 .avatarFallback {
   align-items: center;
-  aspect-ratio: 1;
-  background:
-    linear-gradient(135deg, rgba(103, 232, 249, 0.14), transparent 55%),
-    #123236;
-  border: 2px solid #42d8cf;
-  border-radius: 50%;
-  color: #bffbf5;
+  color: #2be0d2;
   display: flex;
-  font: 700 1.45rem/1 "Courier New", monospace;
+  font: 700 2rem/1 var(--font-spacemono), "Courier New", monospace;
   justify-content: center;
   letter-spacing: 0.08em;
-  margin: 0 auto 1.15rem;
-  max-width: 9.2rem;
-  width: 100%;
 }
 
-.framedCard {
-  background: #082124;
-  padding: 0;
-}
+.portraitFrame { aspect-ratio: 4 / 5; }
+.squareFrame { aspect-ratio: 1; }
+.wideFrame { aspect-ratio: 4 / 3; }
 
-.framedCard .memberInfo {
-  padding: 1.2rem;
-}
-
-.portraitFrame {
-  aspect-ratio: 358 / 514;
-  border: 0;
-  border-bottom: 1px solid #315052;
-  border-radius: 0;
-  margin: 0;
-  max-width: none;
-  width: 100%;
-}
-
-.squareFrame {
-  aspect-ratio: 1;
-  border: 0;
-  border-bottom: 1px solid #315052;
-  border-radius: 0;
-  margin: 0;
-  max-width: none;
-  width: 100%;
-}
-
-.wideFrame {
-  aspect-ratio: 871 / 819;
-  border: 0;
-  border-bottom: 1px solid #315052;
-  border-radius: 0;
-  margin: 0;
-  max-width: none;
-  width: 100%;
-}
-
-/* Keep the adviser portraits visually balanced even though the supplied artwork
-   has different source aspect ratios. The original images remain fully visible. */
-.moderatorGrid .portraitFrame,
-.moderatorGrid .wideFrame {
-  aspect-ratio: 4 / 3;
-  background: #061416;
+/* Adviser artwork has mixed source ratios; letterbox it cleanly. */
+.moderatorGrid .avatar,
+.moderatorGrid .avatarFallback {
+  background: #0a1512;
   object-fit: contain;
 }
 
-.memberInfo { text-align: center; }
-.memberRole { color: #5de6db; font: 700 0.69rem/1.4 "Courier New", monospace; letter-spacing: 0.08em; margin: 0 0 0.45rem; overflow-wrap: anywhere; text-transform: uppercase; }
-.memberId { align-items: center; color: #91a7a6; display: flex; font-size: 0.78rem; gap: 0.35rem; justify-content: center; line-height: 1.4; margin: 0.75rem 0 0; }
-.memberId svg { color: #54d9d0; flex: 0 0 auto; }
+.memberInfo {
+  padding: 1.15rem 1rem 1.35rem;
+}
+
+.memberRole {
+  color: #2be0d2;
+  font: 700 0.65rem/1.4 var(--font-spacemono), "Courier New", monospace;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.4rem;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.memberCard h5 {
+  color: #e8fffb;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.memberId {
+  align-items: center;
+  color: rgba(232, 255, 251, 0.45);
+  display: flex;
+  font-size: 0.75rem;
+  gap: 0.35rem;
+  justify-content: center;
+  line-height: 1.4;
+  margin: 0.55rem 0 0;
+}
+
+.memberId svg { color: #2be0d2; flex: 0 0 auto; }
 
 .emptyState {
   align-items: center;
-  background: rgba(21, 58, 61, 0.4);
-  border: 1px dashed #477071;
-  color: #b3c5c4;
+  background: rgba(255, 255, 251, 0.04);
+  border: 1.5px dashed rgba(232, 255, 251, 0.25);
+  border-radius: 1rem;
+  color: rgba(232, 255, 251, 0.6);
   display: flex;
   gap: 0.85rem;
   justify-content: center;
@@ -328,45 +485,59 @@
   text-align: center;
 }
 
-.emptyState svg { color: #67e8f9; flex: 0 0 auto; }
+.emptyState svg { color: #2be0d2; flex: 0 0 auto; }
 .emptyState p { font-size: 0.95rem; margin: 0; }
-.emptyState code { color: #71e5dc; font: 0.82rem "Courier New", monospace; }
+
+@media (min-width: 900px) {
+  /* The year label pins while its records scroll past. `align-self: start` is
+     required — a grid item otherwise stretches to the full row height, and a
+     stretched item has no room to stick, so the label simply scrolls away.
+     `top` clears the fixed navbar pill (pt-5 + ~3.25rem pill) plus a gap. */
+  .yearSection {
+    grid-template-columns: 9rem minmax(0, 1fr);
+  }
+
+  .yearSticky {
+    align-self: start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: sticky;
+    top: 9.5rem;
+    z-index: 1;
+  }
+}
 
 @media (max-width: 1040px) {
   .memberGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .founderGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .moderatorGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 800px) {
-  .section { padding: 5rem 6vw; }
   .intro { align-items: start; grid-template-columns: 1fr; }
   .intro h2 { max-width: 12ch; }
   .panelIntro { align-items: start; flex-direction: column; }
-  .achievementGrid { grid-template-columns: 1fr; }
-  .memberGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .founderGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .moderatorGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .memberGrid,
+  .founderGrid,
+  .moderatorGrid,
   .prefectGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .memberCard h5 { overflow-wrap: anywhere; }
+  .wordmark { font-size: clamp(3.5rem, 16vw, 8rem); }
 }
 
 @media (max-width: 480px) {
-  .achievementCard { min-height: unset; }
-  .memberGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .founderGrid { grid-template-columns: 1fr; max-width: 22.5rem; }
-  .moderatorGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 25rem; }
-  .prefectGrid { grid-template-columns: 1fr; max-width: 22.5rem; margin: 0 auto; }
-  .memberCard { padding: 1rem 0.7rem; }
-  .framedCard { padding: 0; }
-  .avatar { max-width: 8.5rem; }
-  .portraitFrame,
-  .squareFrame,
-  .wideFrame { max-width: none; }
-  .avatarFallback { max-width: 8.5rem; }
-  .memberId { font-size: 0.72rem; }
+  .memberGrid { grid-template-columns: 1fr; max-width: 22rem; }
+  .founderGrid,
+  .moderatorGrid,
+  .prefectGrid { grid-template-columns: 1fr; max-width: 20rem; }
+  .memberCard h5 { overflow-wrap: anywhere; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .panel, .tab, .achievementCard, .memberCard { animation: none; transition: none; }
+  .card,
+  .memberCard,
+  .avatar,
+  .avatarFallback,
+  .portraitShine,
+  .filterChip {
+    transition: none;
+  }
 }

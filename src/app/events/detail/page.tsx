@@ -55,13 +55,13 @@ function EventDetailContent() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <Link href="/events" className="inline-flex items-center text-sm text-text-secondary hover:text-primary mb-8 transition-colors">
+      <Link href="/events" className="inline-flex items-center text-sm text-text-secondary hover:text-text-primary mb-8 transition-colors">
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Events
       </Link>
       
       <div className="mb-8">
-        <h1 className="text-3xl md:text-5xl font-bold text-primary mb-4">{event.name}</h1>
+        <h1 className="text-3xl md:text-5xl font-bold text-text-primary mb-4">{event.name}</h1>
         <div className="flex flex-wrap items-center gap-6 mb-6">
           <span className="font-mono text-text-secondary">
             {new Date(event.date).toLocaleString(undefined, { 
@@ -87,7 +87,7 @@ function EventDetailContent() {
         
         {status === 'upcoming' && openAt && (
           <div className="bg-secondary border border-border p-8 text-center max-w-xl mx-auto">
-            <h3 className="text-xl font-bold text-primary mb-4">Registration Opens Soon</h3>
+            <h3 className="text-xl font-bold text-text-primary mb-4">Registration Opens Soon</h3>
             <div className="flex justify-center">
               <Countdown targetDate={openAt} />
             </div>

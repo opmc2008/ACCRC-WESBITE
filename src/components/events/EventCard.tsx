@@ -24,12 +24,12 @@ export function EventCard({ event }: { event: PublicEvent }) {
     && now < event.registrationClosesAt!;
 
   return (
-    <article className="border border-border bg-secondary hover:border-accent/50 transition-colors duration-300 flex flex-col h-full rounded-sm overflow-hidden">
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border-2 border-border bg-secondary transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-[0_24px_50px_-28px_rgba(13,27,24,0.45)]">
       {event.imageUrl && (
         <img
           src={event.imageUrl}
           alt={`${event.name} event`}
-          className="h-44 w-full object-cover border-b border-border"
+          className="h-44 w-full border-b-2 border-border object-cover"
         />
       )}
       <div className="p-6 flex flex-col h-full">
@@ -46,7 +46,7 @@ export function EventCard({ event }: { event: PublicEvent }) {
             />
           )}
         </div>
-        <h3 className="text-xl md:text-2xl font-bold text-primary mb-3">{event.name}</h3>
+        <h3 className="mb-3 font-display text-display-xs font-extrabold tracking-tight text-ink">{event.name}</h3>
         {event.location && (
           <div className="flex items-center text-sm text-text-secondary mb-4 gap-2">
             <MapPin className="w-4 h-4 shrink-0" />
@@ -56,13 +56,13 @@ export function EventCard({ event }: { event: PublicEvent }) {
         <p className="text-sm text-text-secondary mb-6 flex-grow">
           {event.description?.substring(0, 150)}{event.description?.length > 150 ? '...' : ''}
         </p>
-        <div className="mt-auto pt-5 border-t border-border">
+        <div className="mt-auto border-t-2 border-border pt-5">
           {event.source === 'facebook' && event.permalinkUrl ? (
             <a
               href={event.permalinkUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-accent hover:text-primary transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-accent hover:text-text-primary transition-colors"
             >
               View on Facebook <ExternalLink className="w-4 h-4" />
             </a>
