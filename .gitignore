@@ -44,3 +44,5 @@ next-env.d.ts
 .freebuff/
 __fbprobe.html
 lint-results.txt
+
+.vercel

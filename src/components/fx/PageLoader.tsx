@@ -17,6 +17,8 @@ import { motion, useReducedMotion } from 'framer-motion';
 
 const MARK = 'ACCRC';
 const DURATION_MS = 1900;
+const EXIT_MS = 850;
+const SEEN_KEY = 'accrc-loader-seen';
 
 /** Deterministic blueprint geometry — no randomness, so SSR and client match. */
 const NODES = [
@@ -37,34 +39,54 @@ const LINKS = [
 
 export function PageLoader() {
   const reduceMotion = useReducedMotion();
-  const [visible, setVisible] = useState(true);
-  const [leaving, setLeaving] = useState(false);
-  const [removed, setRemoved] = useState(false);
+
+  /* One state machine instead of several cascading effects: 'loading' →
+     'exiting' → 'done'. Kept deliberately flat so there is no way for the
+     overlay to get stuck on screen and block the page. */
+  const [phase, setPhase] = useState<'loading' | 'exiting' | 'done'>('loading');
 
   useEffect(() => {
-    const leaveTimer = window.setTimeout(() => setLeaving(true), DURATION_MS);
-    const removeTimer = window.setTimeout(() => setRemoved(true), DURATION_MS + 850);
+    /* Play once per browser session — a reload or client-side navigation should
+       not slam a full-screen overlay back up over the content. */
+    let seen = false;
+    try {
+      seen = window.sessionStorage.getItem(SEEN_KEY) === '1';
+    } catch {
+      // Storage can be unavailable (private mode); fall back to always playing.
+    }
+    if (seen) {
+      setPhase('done');
+      return;
+    }
+
+    try {
+      window.sessionStorage.setItem(SEEN_KEY, '1');
+    } catch {
+      // ignore
+    }
+
+    const leaveTimer = window.setTimeout(() => setPhase('exiting'), DURATION_MS);
+    /* Hard failsafe: the exit animation is 0.8s, so unmount with headroom even
+       if the animation never fires (background tab, reduced-motion edge cases). */
+    const removeTimer = window.setTimeout(() => setPhase('done'), DURATION_MS + EXIT_MS + 400);
+
     return () => {
       window.clearTimeout(leaveTimer);
       window.clearTimeout(removeTimer);
     };
   }, []);
 
-  // Lock the page only while the overlay is on screen.
+  // Lock the page only while the overlay is actually on screen.
   useEffect(() => {
-    if (!visible || reduceMotion) return;
+    if (phase === 'done' || reduceMotion) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = previous;
     };
-  }, [visible, reduceMotion]);
+  }, [phase, reduceMotion]);
 
-  useEffect(() => {
-    if (removed) setVisible(false);
-  }, [removed]);
-
-  if (!visible) return null;
+  if (phase === 'done') return null;
 
   if (reduceMotion) {
     return (
@@ -81,8 +103,8 @@ export function PageLoader() {
       className="fixed inset-0 z-[100] overflow-hidden bg-primary"
       aria-hidden
       initial={{ y: 0 }}
-      animate={leaving ? { y: '-101%' } : { y: '0%' }}
-      transition={leaving ? { duration: 0.8, ease: [0.76, 0, 0.24, 1] } : { duration: 0.2 }}
+      animate={phase === 'exiting' ? { y: '-101%' } : { y: '0%' }}
+      transition={phase === 'exiting' ? { duration: 0.8, ease: [0.76, 0, 0.24, 1] } : { duration: 0.2 }}
     >
       {/* Blueprint grid that draws itself in */}
       <motion.div

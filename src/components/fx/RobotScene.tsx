@@ -5,9 +5,11 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Bluish-white — keeps the hand in the light/white family but on a cool hue
-// that clearly separates from the warm paper background.
-const THEME_WHITE = new THREE.Color('#d8e5f1');
+// Light steel-blue. Deliberately saturated in blue rather than a near-white:
+// the hero backdrop puts a mint glow directly behind the hand, and a near-white
+// surface absorbs that tint and reads green. Holding real blue keeps the hand
+// cool against both the warm paper and the mint glow.
+const THEME_WHITE = new THREE.Color('#bcd4ee');
 
 // Exact Mind Robotics configuration & viewport mapping
 const CONFIG = {
@@ -89,9 +91,10 @@ function MindRoboticsHand() {
 
         const origMat = mesh.material as THREE.MeshStandardMaterial;
         let baseColor = THEME_WHITE.clone();
-        // White parts carry an emissive floor of the same bluish tint. It lifts
-        // every face to at least ~85% of the tint colour, so shadowed sides stay
-        // light and blue instead of dropping to muddy dark grey.
+        // Every recoloured part carries an emissive floor in its OWN hue. That
+        // lifts shadowed faces well clear of the light budget, so the white
+        // stays light and blue and the accents stay vivid instead of being
+        // crushed to near-black by the dim lights.
         let emissiveColor = THEME_WHITE.clone().multiplyScalar(0.55);
         let emissiveIntensity = 1;
 
@@ -99,10 +102,10 @@ function MindRoboticsHand() {
           const matName = (origMat.name || '').toLowerCase();
           if (matName.includes('blue') || matName.includes('teal')) {
             baseColor = new THREE.Color(0x1a8f89); // Signature Teal accent
-            emissiveIntensity = 0;                 // keep accents fully saturated
+            emissiveColor = baseColor.clone().multiplyScalar(0.55);
           } else if (matName.includes('red') || matName.includes('coral')) {
             baseColor = new THREE.Color(0xef6156); // Coral accent
-            emissiveIntensity = 0;
+            emissiveColor = baseColor.clone().multiplyScalar(0.55);
           } else if (origMat.color) {
             const hsl = { h: 0, s: 0, l: 0 };
             origMat.color.getHSL(hsl);
